@@ -1,7 +1,6 @@
 package com.topcv.topcvserver;
 
 import io.github.cdimascio.dotenv.Dotenv;
-import java.util.Objects;
 import javax.annotation.PostConstruct;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,10 +19,28 @@ public class TopCvServerApplication {
    */
   @PostConstruct
   public void init() {
-    // Load the .env file
+    String mongodbUri = null;
+
+    // Load the .env file (for local development)
     Dotenv dotenv = Dotenv.configure().load();
-    // Set the MONGODB_URI as a system property for Spring Boot to use
-    System.setProperty("MONGODB_URI", Objects.requireNonNull(dotenv.get("MONGODB_URI")));
+    mongodbUri = dotenv.get("MONGODB_URI");
+
+    // If not found in .env, check environment variables (for Heroku)
+    if (mongodbUri == null) {
+      mongodbUri = System.getenv("MONGODB_URI");
+    }
+
+    // If we have a valid mongodbUri, set it as a system property
+    if (mongodbUri != null) {
+      System.setProperty("MONGODB_URI", mongodbUri);
+      // Log for debugging
+      System.out.println("MONGODB_URI: " + mongodbUri);
+    } else {
+      // If MongoDB URI is not found, throw an error or handle the case as needed
+      System.err.println("MONGODB_URI is not set! Please configure it in your environment.");
+      // Optionally throw an exception
+      throw new RuntimeException("MONGODB_URI is not set.");
+    }
   }
 
   /** Main method to run the Spring Boot application. */
