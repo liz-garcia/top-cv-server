@@ -18,26 +18,19 @@ public class TopCvServerApplication {
    */
   @PostConstruct
   public void init() {
-    String mongodbUri = null;
+    String mongodbUri = System.getenv("MONGODB_URI");
 
-    // Load the .env file (for local development)
-    Dotenv dotenv = Dotenv.configure().load();
-    mongodbUri = dotenv.get("MONGODB_URI");
-
-    // If not found in .env, check environment variables (for Heroku)
+    // Use Dotenv only in local development
     if (mongodbUri == null) {
-      mongodbUri = System.getenv("MONGODB_URI");
+      Dotenv dotenv = Dotenv.configure().load();
+      mongodbUri = dotenv.get("MONGODB_URI");
     }
 
-    // If we have a valid mongodbUri, set it as a system property
     if (mongodbUri != null) {
       System.setProperty("MONGODB_URI", mongodbUri);
-      // Log for debugging
       System.out.println("MONGODB_URI: " + mongodbUri);
     } else {
-      // If MongoDB URI is not found, throw an error or handle the case as needed
-      System.err.println("MONGODB_URI is not set! Please configure it in your environment.");
-      // Optionally throw an exception
+      System.err.println("MONGODB_URI is not set!");
       throw new RuntimeException("MONGODB_URI is not set.");
     }
   }
