@@ -6,8 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Main entry point for the Spring Boot application. Initializes environment variables and starts
- * the Spring context.
+ * Main entry point for the Spring Boot application. Initializes environment variables and starts the Spring context.
  */
 @SpringBootApplication
 public class TopCvServerApplication {
