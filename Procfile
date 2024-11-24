@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -jar build/libs/your-application-name.jar
+web: java -Dserver.port=$PORT $JAVA_OPTS -jar build/libs/top-cv-server-0.0.1-SNAPSHOT.jar
