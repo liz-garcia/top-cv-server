@@ -1,12 +1,9 @@
 package com.topcv.topcvserver.controllers;
 
+import java.util.List;
+import com.topcv.topcvserver.dto.Response;
 import com.topcv.topcvserver.models.User;
 import com.topcv.topcvserver.repositories.UserRepository;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,53 +13,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/users")
 public class UserController {
 
-  private static final Logger logger = Logger.getLogger(UserController.class.getName());
+  private final UserRepository userRepository;
 
-  @Autowired private UserRepository userRepository;
+  public UserController(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
 
   /** Handles GET requests to fetch all users. */
   @GetMapping
-  public ResponseEntity<?> getUsers() {
+  public Response getUsers() {
     try {
       List<User> users = userRepository.findAll();
-      return ResponseEntity.ok().body(new Response(true, users));
+      return Response.success(users);
     } catch (Exception e) {
-      logger.log(Level.SEVERE, "Error fetching users", e);
-      return ResponseEntity.status(500)
-          .body(new Response(false, "Unable to get users, try again later"));
+      return Response.error("An unexpected error occurred: " + e.getMessage());
     }
   }
 
-  /** Wrapper class for API responses. */
-  static class Response {
-    private boolean success; // Success status
-    private Object result; // Used for data in success cases
-    private String msg; // Used for error messages
-
-    /** Constructor for success responses. */
-    public Response(boolean success, Object result) {
-      this.success = success;
-      this.msg = null; // No message for success
-      this.result = result;
-    }
-
-    /** Constructor for error responses. */
-    public Response(boolean success, String msg) {
-      this.success = success;
-      this.msg = msg;
-      this.result = null; // No result for errors
-    }
-
-    public boolean isSuccess() {
-      return success;
-    }
-
-    public Object getResult() {
-      return result;
-    }
-
-    public String getMsg() {
-      return msg;
-    }
-  }
 }
