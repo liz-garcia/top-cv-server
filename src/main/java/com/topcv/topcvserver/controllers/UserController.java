@@ -15,11 +15,7 @@ public class UserController {
 
   private final UserRepository userRepository;
 
-  /**
-   * Constructs a {@link UserController} with the given {@link UserRepository}.
-   *
-   * @param userRepository The repository for managing {@link User} entities.
-   */
+  /** Constructs a UserController with the given UserRepository. */
   public UserController(UserRepository userRepository) {
     this.userRepository = userRepository;
   }
