@@ -1,9 +1,9 @@
 package com.topcv.topcvserver.controllers;
 
-import java.util.List;
 import com.topcv.topcvserver.dto.Response;
 import com.topcv.topcvserver.models.User;
 import com.topcv.topcvserver.repositories.UserRepository;
+import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +15,7 @@ public class UserController {
 
   private final UserRepository userRepository;
 
+  /** Constructs a UserController with the given UserRepository. */
   public UserController(UserRepository userRepository) {
     this.userRepository = userRepository;
   }
@@ -29,5 +30,4 @@ public class UserController {
       return Response.error("An unexpected error occurred: " + e.getMessage());
     }
   }
-
 }

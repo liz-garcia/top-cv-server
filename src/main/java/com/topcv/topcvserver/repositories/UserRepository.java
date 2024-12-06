@@ -8,5 +8,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * MongoRepository to leverage built-in functionality.
  */
 public interface UserRepository extends MongoRepository<User, String> {
-  // No need for custom methods; use the built-in findAll() method
+  // Currently no need for custom methods; use the built-in findAll() method
 }
