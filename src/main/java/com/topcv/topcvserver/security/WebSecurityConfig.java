@@ -20,7 +20,8 @@ public class WebSecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable) // Disable form login
                 .securityMatcher("/**") // Ensure the filter chain to all requests. Could also be set to "/api/**"
                 .authorizeHttpRequests(registry -> registry
-                        .requestMatchers("/").permitAll() // Allow public access to "/" without requiring authentication
+                        .requestMatchers("/").permitAll() // Allow public access to "/"
+                        .requestMatchers("/api/auth/login").permitAll() // Allow public access to "/auth/login"
                         .anyRequest().authenticated() // Require authentication for all other routes
                 );
 
