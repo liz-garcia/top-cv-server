@@ -8,9 +8,9 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    private static final String EXISTING_EMAIL = "test@test.com";
+    private static final String EXISTING_EMAIL = "test@test.com"; // admin role
 
-    private static final String ANOTHER_EMAIL = "next@test.com";
+    private static final String ANOTHER_EMAIL = "next@test.com"; // user role
 
     public Optional<UserEntity> findByEmail(String email) {
         // TODO: Move this to a database
