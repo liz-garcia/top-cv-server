@@ -36,6 +36,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(registry -> registry
                         .requestMatchers("/").permitAll() // Allow public access to "/"
                         .requestMatchers("/api/auth/login").permitAll() // Allow public access to "/auth/login"
+                        .requestMatchers("/admin/**").hasRole("ADMIN") // Allow to "/admin/**" only those with ADMIN role
                         .anyRequest().authenticated() // Require authentication for all other routes
                 );
 
